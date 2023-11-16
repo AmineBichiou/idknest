@@ -12,13 +12,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validateUser(token): Promise<any> {
     const decoded:any = this.jwtService.decode(token);
-    if(decoded.id){
       const user = await this.authService.validateUser(decoded.id);
 
       if (!user) return null
-      return user
-    }
-      return null;
+      return user;
   }
   
 
