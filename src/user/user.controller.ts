@@ -1,24 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post,Headers, HttpStatus, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-    authService: any;
     constructor( private readonly userService : UserService){}
     
     @Post()
         async addUser(
-            @Res() res: Response,
-            @Headers('authorization') authHeader: string,
             @Body('nom') nom: string,
             @Body('email') email: string,
             @Body('password') password: string,
         ){
-            let token = authHeader.split(' ')[1];
-      let userFound = await this.authService.validateUser(token);
-
-      if (!userFound) return res.status(HttpStatus.UNAUTHORIZED).json({message: "Unauthorized"});
             const generatedId = await this.userService.insertUser(nom, email, password);
             return { id: generatedId };
         }
