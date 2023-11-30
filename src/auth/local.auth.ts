@@ -3,6 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { Etudiant } from 'src/etudiant/etudiant.model';
+import { Entreprise } from 'src/entreprise/entreprise.model';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -10,9 +12,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  async validateUser(token): Promise<any> {
+  async validateUser(token): Promise<Etudiant | Entreprise | null> {
     const decoded:any = this.jwtService.decode(token);
-      const user = await this.authService.validateUser(decoded.id);
+      const user = await this.authService.validateUser(decoded.sub);
+      console.log(user)
 
       if (!user) return null
       return user;

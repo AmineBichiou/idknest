@@ -15,7 +15,6 @@ import { EtudiantModule } from 'src/etudiant/etudiant.module';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
     }),
     forwardRef(() => EntrepriseModule),
     forwardRef(() => EtudiantModule)

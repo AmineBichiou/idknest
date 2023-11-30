@@ -27,7 +27,7 @@ export class OffreStageService {
     async getOffresStage() {
       try {
           const offresStage = await this.offreStageModel.find().populate("entreprise").exec();
-          return offresStage.map(offreStage => ({
+          return offresStage/*offresStage.map(offreStage => ({
               id: offreStage.id,
               titre: offreStage.titre,
               description: offreStage.description,
@@ -43,7 +43,7 @@ export class OffreStageService {
                 localisation: offreStage.entreprise.localisation,
                 secteur: offreStage.entreprise.secteur,
               }
-          }));
+          }));*/
       } catch (error) {
           console.error(error);
           throw new Error('Error fetching offresStage');

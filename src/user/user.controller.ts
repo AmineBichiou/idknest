@@ -6,7 +6,6 @@ import { UserService } from './user.service';
 export class UserController {
     authService: any;
     constructor( private readonly userService : UserService){}
-    
     @Post()
         async addUser(
             @Res() res: Response,

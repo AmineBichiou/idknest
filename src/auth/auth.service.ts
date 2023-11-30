@@ -16,20 +16,18 @@ export class AuthService {
   async signIn(username, pass) {
     //const user = await this.userService.findOne(username);
     const etudiant = await this.etudiantService.findOne(username);
-    const entreprise = await this.entrepriseService.findOne(username);
+    const entreprise = await this.entrepriseService.findUser(username);
     const user = etudiant || entreprise;
     if(user){
     if ( user.user.password !== pass) {
       throw new UnauthorizedException('Invalid credentials');
     }
     }
-    const payload = { username: user.user.email, sub: user.user.id };
+    const payload = { username: user.user.email, sub: user.id };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
-
-
 
   async validateUser(id: string): Promise<Etudiant | Entreprise | null> {
     const etudiant = await this.etudiantService.findOne(id);
